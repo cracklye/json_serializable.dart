@@ -19,6 +19,7 @@ class DefaultWithSymbol {
 
 int _function() => 42;
 
+
 @ShouldGenerate(
   r'''
 DefaultWithFunction _$DefaultWithFunctionFromJson(Map<String, dynamic> json) =>

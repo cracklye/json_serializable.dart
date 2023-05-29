@@ -203,6 +203,7 @@ mixin DecodeHelper implements HelperCore {
     final jsonKey = jsonKeyFor(field);
     final defaultValue = jsonKey.defaultValue;
     final readValueFunc = jsonKey.readValueFunctionName;
+    final deserializeDefaultIfNull = jsonKey.deserializeDefaultIfNull;
 
     String deserialize(String expression) => contextHelper
         .deserialize(
@@ -227,11 +228,19 @@ mixin DecodeHelper implements HelperCore {
           'should only be true if `_generator.checked` is true.',
         );
 
-        value = deserialize(
-          readValueFunc == null
-              ? 'json[$jsonKeyName]'
-              : '$readValueFunc(json, $jsonKeyName)',
-        );
+        if (deserializeDefaultIfNull) {
+          value = deserialize(
+            readValueFunc == null
+                ? 'json[$jsonKeyName]??$defaultValue'
+                : '$readValueFunc(json, $jsonKeyName)',
+          );
+        } else {
+          value = deserialize(
+            readValueFunc == null
+                ? 'json[$jsonKeyName]'
+                : '$readValueFunc(json, $jsonKeyName)',
+          );
+        }
       }
     } on UnsupportedTypeError catch (e) // ignore: avoid_catching_errors
     {

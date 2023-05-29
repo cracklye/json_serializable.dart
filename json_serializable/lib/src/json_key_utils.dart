@@ -288,6 +288,7 @@ KeyConfig _populateJsonKey(
   String? unknownEnumValue,
   bool? includeToJson,
   bool? includeFromJson,
+  bool? deserializeDefaultIfNull,
 }) {
   if (disallowNullValue == true) {
     if (includeIfNull == true) {
@@ -299,17 +300,17 @@ KeyConfig _populateJsonKey(
   }
 
   return KeyConfig(
-    defaultValue: defaultValue,
-    disallowNullValue: disallowNullValue ?? false,
-    includeIfNull: _includeIfNull(
-        includeIfNull, disallowNullValue, classAnnotation.includeIfNull),
-    name: name ?? encodedFieldName(classAnnotation.fieldRename, element.name),
-    readValueFunctionName: readValueFunctionName,
-    required: required ?? false,
-    unknownEnumValue: unknownEnumValue,
-    includeFromJson: includeFromJson,
-    includeToJson: includeToJson,
-  );
+      defaultValue: defaultValue,
+      disallowNullValue: disallowNullValue ?? false,
+      includeIfNull: _includeIfNull(
+          includeIfNull, disallowNullValue, classAnnotation.includeIfNull),
+      name: name ?? encodedFieldName(classAnnotation.fieldRename, element.name),
+      readValueFunctionName: readValueFunctionName,
+      required: required ?? false,
+      unknownEnumValue: unknownEnumValue,
+      includeFromJson: includeFromJson,
+      includeToJson: includeToJson,
+      deserializeDefaultIfNull: deserializeDefaultIfNull ?? false);
 }
 
 bool _includeIfNull(
